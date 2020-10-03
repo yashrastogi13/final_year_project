@@ -5,11 +5,21 @@ my profile
 {% endblock title %}
 
 {% block content %}
+    <!-- ui form is a part of sementic ui -->
+    <!-- enctype is used to send the files through forms -->
+    <from action="" method="POST" class="ui form" enctype="multipart/from-data" >
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type='submit' class="ui positive button">Update</button>
+    </form>
+{% endblock content %}
+
+
+
+<!--
 <h1>My-Profile: {{profile}}</h1>
 <hr>
 <img src={{profile.avatar.url}}>
-<br>
-{{profile.avatar.url}}
 <br>
 {{profile.first_name}} 
 <br>
@@ -26,4 +36,4 @@ my profile
         <li>{{friend}}</li>
     {% endfor %}
 </ul>
-{% endblock content %}
+-->

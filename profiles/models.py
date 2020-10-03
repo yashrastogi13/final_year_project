@@ -5,6 +5,7 @@ from .utils import get_random_code
 from django.template.defaultfilters import slugify
 # Create your models here.
 
+
 class Profile(models.Model):
     first_name = models.CharField(max_length = 200, blank = True)
     last_name = models.CharField(max_length = 200, blank = True)
@@ -48,13 +49,11 @@ class Profile(models.Model):
 
 
 
-
-
-
 STATUS_CHOICES = (
     ('send','send'),
     ('accepted','accepted'),
 )
+
 
 class Relationship(models.Model):
     sender = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='sender')
