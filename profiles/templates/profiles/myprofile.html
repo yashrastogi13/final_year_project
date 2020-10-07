@@ -5,35 +5,98 @@ my profile
 {% endblock title %}
 
 {% block content %}
-    <!-- ui form is a part of sementic ui -->
-    <!-- enctype is used to send the files through forms -->
-    <from action="" method="POST" class="ui form" enctype="multipart/from-data" >
-        {% csrf_token %}
-        {{form.as_p}}
-        <button type='submit' class="ui positive button">Update</button>
-    </form>
+<!--Modal for profile-->
+<div class="ui modal mymodal">
+    <i class="close icon"></i>
+    <div class="header">
+        Update your Profile
+    </div>
+    <div class="image content">
+        <div class="ui medium image">
+            <img src="{{profile.avatar.url}}">
+        </div>
+        <div class="description">
+            <div class="ui header">Provide some info about you</div>
+            <form action="" method="POST" class="ui form" enctype='multipart/form-data'>
+                {% csrf_token %}
+                {{form.as_p}}
+        </div>
+    </div>
+    <div class="actions">
+        <button type='submit' class="ui positive right labeled icon button">
+            Update
+            <i class="checkmark icon"></i>
+        </button>
+        </form>
+    </div>
+</div>
+
+<div class="ui segment">
+    {% if confirm %}
+    <div class="ui green message">Your profile has been updated</div>
+    {% endif %}
+    <h3>profile: {{request.user}}</h3>
+    <div class="ui grid">
+        <div class='row'>
+            <div class='six wide column'>
+                <img class="ui medium rounded image" src={{profile.avatar.url}}>
+                <div class="row mt-5">
+
+                    <!--jQuery is applied on this button-->
+                    <button class="ui secondary button" id='modal-btn' style="margin-top:20px;">Update profile</button>
+                </div>
+            </div>
+
+            <div class='ten wide column'>
+                <table class="ui table">
+                    <tbody>
+                        <tr>
+                            <td>firstname</td>
+                            <td>{{profile.first_name}}</td>
+                        </tr>
+                        <tr>
+                            <td>lastname</td>
+                            <td>{{profile.last_name}}</td>
+                        </tr>
+                        <tr>
+                            <td>bio</td>
+                            <td>{{profile.bio}}</td>
+                        </tr>
+                        <tr>
+                            <td>country</td>
+                            <td>{{profile.country}}</td>
+                        </tr>
+                        <tr>
+                            <td>no of friends</td>
+                            <td>{{profile.get_friends_no}}</td>
+                        </tr>
+                        <tr>
+                            <td>friends</td>
+                            <td>
+                                <ul>
+                                    {% for friend in profile.get_friends %}
+                                    <li>{{friend}}</li>
+                                    {% endfor %}
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>No of posts</td>
+                            <td>{{profile.get_no_of_post}}</td>
+                        </tr>
+                        <tr>
+                            <td>No of likes</td>
+                            <td>{{profile.get_no_of_likes_given}}</td>
+                        </tr>
+                        <tr>
+                            <td>No of likes received</td>
+                            <td>{{profile.get_no_of_likes_received}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock content %}
-
-
-
-<!--
-<h1>My-Profile: {{profile}}</h1>
-<hr>
-<img src={{profile.avatar.url}}>
-<br>
-{{profile.first_name}} 
-<br>
-{{profile.last_name}}
-<br>
-{{profile.bio}}
-<br>
-{{profile.country}}
-<br>
-{{profile.get_friends_no}}
-<br>
-<ul>
-    {% for friend in profile.get_friends %}
-        <li>{{friend}}</li>
-    {% endfor %}
-</ul>
--->

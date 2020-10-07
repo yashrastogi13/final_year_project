@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'users.apps.UsersConfig',
     'posts.apps.PostsConfig',
     'profiles.apps.ProfilesConfig',
 ]
@@ -123,11 +122,10 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR,'static/'),
+    os.path.join(BASE_DIR,'static_project'),
 ]
+
 STATIC_ROOT = os.path.join(BASE_DIR,"static_cdn","static_root")
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'static_cdn','media_root')
-
-AUTH_USER_MODEL = 'users.CustomUser'

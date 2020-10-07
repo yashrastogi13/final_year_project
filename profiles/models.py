@@ -47,7 +47,32 @@ class Profile(models.Model):
     def get_friends_no(self):
         return self.friends.all().count()
 
+    def get_no_of_post(self):
+        #instead of using post_set.all().count() we are using related_name from post class
+        return self.posts.all().count()
 
+    def get_authors_post(self):
+        return self.posts.all()
+
+    def get_no_of_likes_given(self):
+        #using related name from Like class in models 
+        likes = self.like_set.all()
+        total_likes = 0
+        for item in likes:
+            if item.value == 'Like':
+                total_likes += 1
+        return total_likes
+
+    def get_no_of_likes_received(self):
+        #using related name from Post model to get reverse relation for likes
+        posts = self.posts.all()
+        total_likes = 0
+        for item in posts:
+            #important
+            #here related_name(likes) does not work becoz there is no reverse relationship
+            #there is only forward relationship so we can directly use column name
+            total_likes += item.liked.all().count()
+        return total_likes
 
 STATUS_CHOICES = (
     ('send','send'),
@@ -64,6 +89,4 @@ class Relationship(models.Model):
 
     def __Str__(self):
         return f"{self.sender}-{self.receiver}-{self.status}"
-
-
 

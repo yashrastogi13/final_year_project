@@ -13,6 +13,12 @@ def my_profile_view(request):
     #this act as a flag which changes to true on a certain condition
     confirm = False
 
+    if request.method == "POST":
+        if form.is_valid():
+            form.save()
+            confirm = True
+    
+
     context = {
         'profile':profile,
         'form': form,
