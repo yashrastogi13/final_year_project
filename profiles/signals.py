@@ -1,4 +1,4 @@
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_delete
 from django.contrib.auth.models import User
 from django.conf import settings
 from django.dispatch import receiver
@@ -23,5 +23,16 @@ def post_save_add_to_friends(sender, instance, created, **kwargs):
         receiver_.friends.add(sender_.user)
         sender_.save()
         receiver_.save()
+
+#this signal will automatically remove friends from each other list when remove friends button is clicked
+@receiver(pre_delete, sender = Relationship)
+def pre_delete_remove_from_friends(sender, instance, **kwargs):    #instance is an obj of Relationship model
+    sender = instance.sender
+    receiver = instance.receiver
+    sender.friends.remove(receiver.user)
+    receiver.friends.remove(sender.user)
+
+
+
     
     

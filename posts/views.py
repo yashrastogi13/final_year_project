@@ -1,11 +1,15 @@
 from django.shortcuts import render,redirect
 from .models import Post,Like
-from profiles.models import Profile
+from profiles.models import Profile,Relationship
 from .forms import PostModelForm,CommentModelForm
 from django.views.generic import UpdateView,DeleteView  #class based views
 from django.urls import reverse_lazy    #reverse is used for function views and reverse lazy for class based views
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
+
+@login_required
 def post_comment_create_and_list_view(request):
     qs = Post.objects.all()
     profile = Profile.objects.get(user=request.user)
@@ -49,6 +53,7 @@ def post_comment_create_and_list_view(request):
 
     return render(request, 'posts/main.html', context)
 
+@login_required
 def like_unlike_post(request):
     user = request.user
     if request.method == 'POST':
@@ -76,7 +81,7 @@ def like_unlike_post(request):
 
     return redirect('posts:main_post_view')
 
-class PostDeleteView(DeleteView):
+class PostDeleteView(LoginRequiredMixin, DeleteView):
     model = Post
     template_name = 'posts/confirm_del.html'
     success_url = reverse_lazy('posts:main_post_view')
@@ -86,11 +91,13 @@ class PostDeleteView(DeleteView):
     def get_object(self, *args, **kwargs):  #get_object is provided by DeleteView class
         pk = self.kwargs.get('pk')
         obj = Post.objects.get(pk = pk)
+
+        #in case a user accesses the delete_page of post of another user
         if not obj.author.user == self.request.user:
             messages.warning(self.request, "You need to be the author of the post in order to delete it")
         return obj
 
-class PostUpdateView(UpdateView):
+class PostUpdateView(LoginRequiredMixin, UpdateView):
     form_class = PostModelForm
     model = Post
     template_name = 'posts/update.html'
@@ -101,5 +108,8 @@ class PostUpdateView(UpdateView):
         if form.instance.author == profile:
             return super().form_valid(form)
         else:
+            #in case a user access the update_page of post of another user
             form.add_error(None, "You need to be the author of the post in order to update it")  
             return super().form_invalid(form)
+
+
