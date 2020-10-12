@@ -5,9 +5,42 @@ invites friends
 {% endblock title %}
 
 {% block content %}
+    {% if is_empty %}
+        <h1>No user available</h1>
+    {% endif %}
     <ul>
-        {% for item in qs %}
-            <li>{{item}}</li>
+        {% for obj in qs %}
+            {% if obj.user not in rel_receiver %}
+                <div class="ui segment">
+                    <div class="ui grid">
+                        <div class="row">
+                            <div class="two wide column">
+                                <img class="ui small circular image" src={{obj.avatar.url}}>
+                            </div>
+
+                            <div class="eleven wide column">
+                                <h3>{{obj.user}}</h3>
+                                <p>{{obj.bio}}</p>
+                            </div>
+
+                            <div class="three wide column" style="margin-top:15px;">
+                                <a href="{{obj.get_absolute_url}}">
+                                    <button class="ui primary button" style="width:148px; margin-bottom:5px;">
+                                        view profile
+                                    </button>
+                                </a>
+                            
+                                <form action="{% url 'profiles:send_invite' %}" method="POST">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="profile_pk" value={{obj.pk}}>
+                                    <!--if user is not in both receiver and sender list then there is no relationship btw them-->
+                                    <button type="submit" class="ui positive basic button" ><i class="plus square icon"></i>Add to friends</button>
+                                </form>            
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
         {% endfor %}
     </ul>
 {% endblock content %}

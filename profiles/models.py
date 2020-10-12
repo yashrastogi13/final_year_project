@@ -16,7 +16,7 @@ class ProfileManager(models.Manager):
         profile = Profile.objects.get(user=sender)
         #fetches relationship of all the invites in which the logged in user is involved
         qs = Relationship.objects.filter(Q(sender=profile) | Q(receiver=profile))
-        print(qs)
+        #print(qs)
 
         accepted = set()
         for rel in qs:

@@ -4,7 +4,7 @@
 {% url 'profiles:my_invites_view' as path_to_my_invites %}
 {% url 'profiles:invite_profiles_view' as path_to_invites  %}
 {% url 'profiles:all_profiles_view' as path_to_all_profiles %}
-
+{% url 'profiles:my_friends_view' as path_to_friends %}
 
 <div class="ui inverted menu nav mb-7 ">
     <div class="ui container">
@@ -29,10 +29,16 @@
                                 Send Invites
                             </a>
                             <a href="{{path_to_my_invites}}" class="{% if request.path == path_to_my_invites %}active{% endif %} item">
-                                Received Invites &nbsp; &nbsp; &nbsp; 
+                                Invites Received &nbsp; &nbsp; &nbsp; 
                                 <div class="ui blue horizontal label">
-                                     {{invites_no}}
+                                    {{invites_no}}
                                 </div> 
+                            </a>
+                            <a href="{{path_to_friends}}" class="{% if request.path == path_to_friends %}active{% endif %} item">
+                                Friends &nbsp; &nbsp; &nbsp;
+                                <div class="ui blue horizontal label" style="margin-left:54px;">
+                                    {{friend_count}}
+                                </div>
                             </a>
                         </div>
                     </div>
@@ -49,7 +55,7 @@
           
                 <a href="{{path_to_my_profile}}" class="{% if request.path == path_to_my_profile %}active{% endif %} item">
                     <img src={{picture.url}} class="ui avatar image">&nbsp;
-                    {{ request.user }}
+                    {{request.user}}
                 </a>
   
                 <a href="" class="ui item">Logout</a>

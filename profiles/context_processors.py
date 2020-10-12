@@ -15,3 +15,12 @@ def invitation_received_no(request):
         return {'invites_no':qs_count}
     return {} 
 
+def friends_no(request):
+    if request.user.is_authenticated:
+        profile_obj = Profile.objects.get(user=request.user)
+        count = profile_obj.get_friends_no()
+        return {'friend_count':count}
+    return {}
+
+
+

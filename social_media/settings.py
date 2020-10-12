@@ -68,6 +68,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'profiles.context_processors.profile_dp',
                 'profiles.context_processors.invitation_received_no',
+                'profiles.context_processors.friends_no',
             ],
         },
     },

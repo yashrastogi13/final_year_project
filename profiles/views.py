@@ -9,6 +9,26 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 
 @login_required
+def my_friends(request):
+    profile = Profile.objects.get(user = request.user)
+    friends = profile.get_friends()
+    friends_profile = []
+    for friend in friends:
+        temp = Profile.objects.get(user = friend)
+        friends_profile.append(temp)
+
+    is_empty = False
+    if len(friends_profile) == 0:
+        is_empty =True
+
+    context = {
+        'friends':friends_profile,
+        'is_empty':is_empty,
+    }
+
+    return render(request, 'profiles/friends_list.html', context)
+
+@login_required
 def my_profile_view(request):
     #getting the profile of the user who is logged in
     profile = Profile.objects.get(user = request.user)
@@ -24,7 +44,6 @@ def my_profile_view(request):
             form.save()
             confirm = True
     
-
     context = {
         'profile':profile,
         'form': form,
@@ -41,7 +60,7 @@ def invite_received(request):
     #using the extended behaviour of the objects
     qs = Relationship.objects.invitations_received(profile)
 
-    results = list(map(lambda x: x.sender, qs))  #get sender from qs
+    results = list(map(lambda x: x.sender, qs))  #get sender from qs and insert it into result
     is_empty = False
 
     if len(results) == 0:
@@ -84,10 +103,23 @@ def reject_invitation(request):
 def invite_profile_list_view(request):
     user = request.user
     qs = Profile.objects.get_all_profiles_to_invite(user)
+    is_empty = False
+    if len(qs) == 0:
+        is_empty = True
     
+    profile = Profile.objects.get(user = user)
+    rel = Relationship.objects.filter(receiver=profile)
+    rel_receiver = set()
+
+    for item in rel:
+        rel_receiver.add(item.sender.user)   #adding sender to the set
+
     context = {
-        'qs':qs
+        'qs':qs,
+        'is_empty':is_empty,
+        'rel_receiver':rel_receiver,
     }
+
     return render(request, 'profiles/invite_profile_list.html', context)
 
 """
@@ -123,6 +155,7 @@ class ProfileListView(LoginRequiredMixin, ListView):
             rel_receiver.append(item.receiver.user)
         for item in rel_s:
             rel_sender.append(item.sender.user)
+
         context["rel_receiver"] = rel_receiver
         context["rel_sender"] = rel_sender
         context["is_empty"] = False

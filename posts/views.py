@@ -14,6 +14,26 @@ def post_comment_create_and_list_view(request):
     qs = Post.objects.all()
     profile = Profile.objects.get(user=request.user)
     
+    friends = profile.get_friends()
+    #getting profile of all the friends of current user
+    friends_profile = []
+    for person in friends:
+        temp = Profile.objects.get(user=person)
+        friends_profile.append(temp)
+
+    #storing the profiles of all the relevent persons in set
+    required_profiles = set()
+    for person in friends_profile:
+        required_profiles.add(person)
+    required_profiles.add(profile)
+
+    #separating the post which are required
+    required_posts = []
+    for post in qs:
+        #matching profiles of post's author and required_profiles
+        if post.author in required_profiles:
+            required_posts.append(post)
+
     #post form
     p_form = PostModelForm()
 
@@ -44,7 +64,7 @@ def post_comment_create_and_list_view(request):
             c_form = CommentModelForm()   #reseting the form
 
     context = {
-        'qs':qs,
+        'qs':required_posts,
         'profile':profile,
         'p_form':p_form,
         'c_form':c_form,

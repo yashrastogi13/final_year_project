@@ -12,15 +12,20 @@ all profiles
         <div class="ui segment">
             <div class="ui grid">
                 <div class="row">
+                    
                     <div class="two wide column">
                         <img class="ui small circular image" src="{{obj.avatar.url}}">
                     </div>
-                    <div class="fourteen wide column">
+
+                    <div class="eleven wide column">
                         
                         <h3>{{obj.user}}</h3>
                         <p>{{obj.bio}}</p>
+                    </div>
+
+                    <div class="three wide column" style="margin-top:15px;">
                         <a href="{{obj.get_absolute_url}}">
-                            <button class="ui primary button" style="margin-bottom:5px; width: 148px">
+                            <button class="ui primary button" style="margin-bottom:5px; width: 150px">
                                 view profile
                             </button>
                         </a>
@@ -33,7 +38,7 @@ all profiles
                                 {% csrf_token %}
                                 <input type="hidden" name="profile_pk" value={{obj.pk}}>
                                 <!--if user is not in both receiver and sender list then there is no relationship btw them-->
-                                <button type="submit" class="ui positive basic button" ><i class="plus square icon"></i>Add to friends</button>
+                                <button type="submit" class="ui positive basic button" style="width:150px;"><i class="plus square icon"></i>Add to friends</button>
                             </form>
 
                         {% endif %}
@@ -41,7 +46,7 @@ all profiles
                         <br>
                         <!--if we has send invitation but other user has not accepted it-->
                         {% if obj.user in rel_receiver and request.user not in obj.friends.all %}
-                            <button class="ui disabled button" style="width: 148px;">Request pending</butotn>
+                            <button class="ui disabled button" style="width: 150px;">Request pending</butotn>
                         {% endif %}
 
                         <!--form for displaying add to friends button-->
@@ -49,10 +54,9 @@ all profiles
                             <form action="{% url 'profiles:remove_friend' %}" method="POST">
                                 {% csrf_token %}
                                 <input type="hidden" name="profile_pk" value={{obj.pk}}>
-                                <button type="submit" class="ui negative basic button"><i class="minus square icon"></i>Remove from friends</button>
+                                <button type="submit" class="ui negative basic button"><i class="minus square icon"></i>Remove friend</button>
                             </form>
                         {% endif %}
-
                     </div>
                 </div>
             </div>
