@@ -43,7 +43,7 @@ my profile
                 <div class="row mt-5">
 
                     <!--jQuery is applied on this button-->
-                    <button class="ui secondary button" id='modal-btn' style="margin-top:20px;">Update profile</button>
+                    <button class="ui secondary button" id='modal-btn' style="margin-top:30px; margin-left:60px;">Update profile</button>
                 </div>
             </div>
 
@@ -74,7 +74,7 @@ my profile
                             <td>Friends</td>
                             <td>{{profile.get_friends_no}}</td>
                         </tr>
-                        <tr>
+                        {% comment %} <tr>
                             <td>Friends list</td>
                             <td>
                                 <ul>
@@ -83,7 +83,7 @@ my profile
                                     {% endfor %}
                                 </ul>
                             </td>
-                        </tr>
+                        </tr> {% endcomment %}
                         <tr>
                             <td>Posts</td>
                             <td>{{profile.get_no_of_post}}</td>

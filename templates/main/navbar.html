@@ -6,10 +6,12 @@
 {% url 'profiles:all_profiles_view' as path_to_all_profiles %}
 {% url 'profiles:my_friends_view' as path_to_friends %}
 {% url 'profiles:users_posts' as path_to_timeline %}
+{% url 'logout_view' as path_to_logout %}
+
 
 <div class="ui secondary pointing menu nav" style="height:60px;">
     <div class="ui container">
-        <h3 style="margin-left:-80px; padding-right:50px; padding-top: 8px;">Social Media</h3>
+        <h3 style="margin-left:-80px; padding-right:50px; padding-top: 8px;">Social Media &reg;</h3>
         <a href="{{path_to_posts}}" class="{% if request.path == path_to_posts %}active{% endif %} item">
             Dashboard
         </a>
@@ -61,7 +63,7 @@
                     {{request.user}}
                 </a>
   
-                <a style="margin-right:-30px" href="" class="ui item">Logout</a>
+                <a style="margin-right:-30px" href="{{path_to_logout}}" class="ui item">Logout</a>
             {% else %}
                 <a href="" class="ui item">
                   Login

@@ -17,14 +17,18 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static 
-from .views import home_view
+from .views import home
+from accounts.views import login_view,register_view,logout_view
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home_view, name='home-view'),
+    path('', home, name='home-view'),
     path('profiles/', include('profiles.urls', namespace='profiles')),
     path('posts/', include('posts.urls', namespace='posts')),
+    path('accounts/login/', login_view, name='login_view'),
+    path('accounts/signup/', register_view, name='signup_view'),
+    path('accounts/logout/', logout_view, name='logout_view'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

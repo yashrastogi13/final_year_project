@@ -40,7 +40,9 @@ INSTALLED_APPS = [
 
     'posts.apps.PostsConfig',
     'profiles.apps.ProfilesConfig',
+    'accounts.apps.AccountsConfig',
 ]
+
 LOGIN_URL = "/admin/" 
 
 MIDDLEWARE = [
@@ -133,3 +135,6 @@ STATIC_ROOT = os.path.join(BASE_DIR,"static_cdn","static_root")
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'static_cdn','media_root')
+
+LOGIN_URL='/accounts/login/'
+LOGIN_REDIRECT_URL='/posts/'

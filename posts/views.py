@@ -33,6 +33,11 @@ def post_comment_create_and_list_view(request):
         #matching profiles of post's author and required_profiles
         if post.author in required_profiles:
             required_posts.append(post)
+    
+    is_empty = False
+
+    if len(required_posts) == 0:
+        is_empty = True
 
     #post form
     p_form = PostModelForm()
@@ -69,6 +74,7 @@ def post_comment_create_and_list_view(request):
         'p_form':p_form,
         'c_form':c_form,
         'post_added':post_added,
+        'is_empty':is_empty,
     }
 
     return render(request, 'posts/main.html', context)

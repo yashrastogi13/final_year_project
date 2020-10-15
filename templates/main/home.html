@@ -1,4 +1,6 @@
 {% load static %}
+{% url 'login_view' as path_to_login %}
+{% url 'signup_view' as path_to_signup %}
 
 <!doctype html>
 <html lang="en">
@@ -21,28 +23,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <!-- Site Properties -->
-    <link rel="stylesheet" type="text/css" href="../dist/components/reset.css">
-    <link rel="stylesheet" type="text/css" href="../dist/components/site.css">
-
-    <link rel="stylesheet" type="text/css" href="../dist/components/container.css">
-    <link rel="stylesheet" type="text/css" href="../dist/components/grid.css">
-    <link rel="stylesheet" type="text/css" href="../dist/components/header.css">
-    <link rel="stylesheet" type="text/css" href="../dist/components/image.css">
-    <link rel="stylesheet" type="text/css" href="../dist/components/menu.css">
-
-    <link rel="stylesheet" type="text/css" href="../dist/components/divider.css">
-    <link rel="stylesheet" type="text/css" href="../dist/components/dropdown.css">
-    <link rel="stylesheet" type="text/css" href="../dist/components/segment.css">
-    <link rel="stylesheet" type="text/css" href="../dist/components/button.css">
-    <link rel="stylesheet" type="text/css" href="../dist/components/list.css">
-    <link rel="stylesheet" type="text/css" href="../dist/components/icon.css">
-    <link rel="stylesheet" type="text/css" href="../dist/components/sidebar.css">
-    <link rel="stylesheet" type="text/css" href="../dist/components/transition.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,500,600,700,700i|Montserrat:300,400,500,600,700" rel="stylesheet">
-
-    <!-- Bootstrap CSS File -->
-    <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
 
     <style type="text/css">
 
@@ -140,8 +121,10 @@
       width: 700px;
       height: 500px;
       margin-left: 0px;
-
       background: url("{% static 'images/people_img.svg' %}") no-repeat center center;
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
       background-size: cover;
       position: fixed;
       right: 0px;
@@ -149,13 +132,7 @@
       
     }
   
-  </style>
-
-  <script src="assets/library/jquery.min.js"></script>
-  <script src="../dist/components/visibility.js"></script>
-  <script src="../dist/components/sidebar.js"></script>
-  <script src="../dist/components/transition.js"></script>
-  
+  </style>  
 </head>
 <body>
   <div style="position: static;">
@@ -170,8 +147,8 @@
           </h1>
           <h2>Post <strike>whatever</strike> you want when you want to.</h2>
           <br>
-          <a class="ui blue button" style="width:90px;">Log in</a>
-          <a class="ui green button"style="width:90px;">Sign Up</a>
+          <a href="{{path_to_login}}" class="ui blue button" style="width:90px;">Log in</a>
+          <a href="{{path_to_signup}}" class="ui green button"style="width:90px;">Sign Up</a>
         </div>
       </div>
     </div>

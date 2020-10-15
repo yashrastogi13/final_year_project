@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
-from .utils import get_random_code
+from .utils import get_random_code,COUNTRY_CHOICES
 from django.template.defaultfilters import slugify
 from django.db.models import Q
 from django.shortcuts import reverse
@@ -39,7 +39,7 @@ class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
     bio = models.TextField(default = "no bio", max_length=300, blank = True)
     email = models.EmailField(max_length = 200,blank = True)
-    country = models.CharField(max_length = 100,blank = True)
+    country = models.CharField(choices = COUNTRY_CHOICES, max_length = 100,blank = True)
     avatar = models.ImageField(default = "avatar.png", upload_to = 'avatars/')
     friends = models.ManyToManyField(settings.AUTH_USER_MODEL, blank = True, related_name='friends')
     slug = models.SlugField(unique = True, blank = True)

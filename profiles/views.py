@@ -13,9 +13,14 @@ from posts.models import Post
 def get_users_posts(request, *args, **kwargs):
     profile = Profile.objects.get(user=request.user)
     users_posts = Post.objects.filter(author = profile)
+    is_empty = False
+
+    if len(users_posts) == 0:
+        is_empty = True
 
     context = {
         'posts':users_posts,
+        'is_empty':is_empty,
     }
 
     return render(request, 'profiles/timeline.html', context)
