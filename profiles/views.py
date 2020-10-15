@@ -6,7 +6,19 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from posts.models import Post
 # Create your views here.
+
+@login_required
+def get_users_posts(request, *args, **kwargs):
+    profile = Profile.objects.get(user=request.user)
+    users_posts = Post.objects.filter(author = profile)
+
+    context = {
+        'posts':users_posts,
+    }
+
+    return render(request, 'profiles/timeline.html', context)
 
 @login_required
 def my_friends(request):

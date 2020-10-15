@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}main page{% endblock title %}
+{% block title %}Dashboard{% endblock title %}
 
 {% block content %}
 <div class="ui grid">
@@ -37,16 +37,16 @@
                         {% if profile not in obj.liked.all %}
                             <button type="submit" class="ui button" style="background-color: transparent !important; width: 10px !important"><i class="thumbs up icon"></i>
                             </button>
-                            <span> {{obj.num_likes}} likes</span>
+                            <span>{{obj.no_of_likes}}</span>
                         {% else %}
                             <button type="submit" class="ui button" style="background-color: transparent !important; width: 10px !important"><i class="thumbs down icon"></i>
                             </button>
-                            <span> {{obj.num_likes}} likes</span>
+                            <span>{{obj.no_of_likes}}</span>
                         {% endif %}
                     </form>
                 </div>
                 <i class="comment icon"></i>
-                <span> {{ obj.num_comments }} comments</span>
+                <span> {{ obj.no_of_comments }} comments</span>
             </div>
             <div class="extra content">
                 <div class="mb-5">
@@ -69,7 +69,7 @@
                     {% endif %}
                 </div>
   
-                <form action="" method="POST"class='ui fluid form'>
+                <form action="" method="POST" class='ui fluid form'>
                     {% csrf_token %}
                     <input type="hidden" name="post_id" value={{obj.id}}>
                     {{ c_form.as_p }}

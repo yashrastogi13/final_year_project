@@ -10,12 +10,14 @@ from .views import (
     accept_invitation,
     reject_invitation,
     my_friends,
+    get_users_posts,
 )
 
 app_name = 'profiles'
 
 urlpatterns = [
     path('', ProfileListView.as_view(), name='all_profiles_view'), 
+    path('timeline/', get_users_posts, name="users_posts"),
     path('friends/', my_friends, name='my_friends_view'),    
     path('myprofile/', my_profile_view, name='my_profile_view'),
     path('my_invites/', invite_received, name='my_invites_view'),
@@ -26,7 +28,6 @@ urlpatterns = [
     path('my_invites/accept/', accept_invitation, name='accept_invite'),
     path('my_invites/reject/', reject_invitation, name='reject_invite'),
     
-
 ]
 
 

@@ -36,7 +36,6 @@ class Comment(models.Model):
     def __str__(self):
         return str(self.pk)
 
-
 LIKE_CHOICES = (
     #first value is for processing and second value is for admin
     ('Like', 'Like'),
