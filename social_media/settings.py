@@ -31,6 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'accounts.apps.AccountsConfig',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,7 +42,7 @@ INSTALLED_APPS = [
 
     'posts.apps.PostsConfig',
     'profiles.apps.ProfilesConfig',
-    'accounts.apps.AccountsConfig',
+    # 'accounts.apps.AccountsConfig',
 ]
 
 LOGIN_URL = "/admin/" 
@@ -138,3 +140,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'static_cdn','media_root')
 
 LOGIN_URL='/accounts/login/'
 LOGIN_REDIRECT_URL='/posts/'
+LOGOUT_URL = '/'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'yrastogi13022000@gmail.com'
+EMAIL_HOST_PASSWORD = 'cqjrxarqsvmephso'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'SocialMedia Team <noreply@SocialMedia.com>'

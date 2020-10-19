@@ -48,4 +48,5 @@ def register_view(request):
 def logout_view(request):
     logout(request)
     # return reverse_lazy(request, 'main/home.html')
-    return render(request, 'main/home.html')
+    # return render(request, 'main/home.html')
+    return redirect('/')

@@ -147,8 +147,11 @@
           </h1>
           <h2>Post <strike>whatever</strike> you want when you want to.</h2>
           <br>
+          <div style="margin-bottom:9px;">
           <a href="{{path_to_login}}" class="ui blue button" style="width:90px;">Log in</a>
           <a href="{{path_to_signup}}" class="ui green button"style="width:90px;">Sign Up</a>
+          </div>
+          <a href="{% url 'password_reset' %}">Forgot Password ?</a>
         </div>
       </div>
     </div>

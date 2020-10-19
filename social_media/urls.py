@@ -19,6 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static 
 from .views import home
 from accounts.views import login_view,register_view,logout_view
+from django.contrib.auth import views as auth_views
 
 
 urlpatterns = [
@@ -29,6 +30,11 @@ urlpatterns = [
     path('accounts/login/', login_view, name='login_view'),
     path('accounts/signup/', register_view, name='signup_view'),
     path('accounts/logout/', logout_view, name='logout_view'),
+    path('accounts/password-reset/', auth_views.PasswordResetView.as_view(template_name='registration/password_reset.html', html_email_template_name='registration/password_reset_email.html'), name='password_reset'),
+    path('accounts/password-reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='registration/password_reset_done.html'), name='password_reset_done'),
+    path('accounts/password-reset-confirm/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='registration/password_reset_confirm.html'), name='password_reset_confirm'),
+    path('accounts/password-reset-complete/', auth_views.PasswordResetCompleteView.as_view(template_name='registration/password_reset_complete.html'), name='password_reset_complete'),
+
 ]
 
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
