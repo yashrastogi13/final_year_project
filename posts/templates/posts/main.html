@@ -4,15 +4,15 @@
 
 {% block content %}
 <div class="ui grid">
-    <div class="eleven wide column">
+    <div class="sixteen wide column">
         {% if is_empty %}
-            <div style="margin-top: 200px;" align="center">
-                <h3>No Post available</h3>
-            </div>
+        <div style="margin-top: 200px;" align="center">
+            <h3>No Post available</h3>
+        </div>
         {% else %}
         {% for obj in qs %}
 
-        <div class="ui fluid card">
+        <div class="ui fluid black card">
             <div class="content">
                 <div class="right floated meta">
                     <div class="ui grid">
@@ -56,8 +56,7 @@
                         {% endif %}
                     </form>
                 </div>
-                <i class="comment icon"></i>
-                <span> {{ obj.no_of_comments }} comments</span>
+                
             </div>
             <div class="extra content">
                 <div class="mb-5">
@@ -65,16 +64,20 @@
                 </div>
 
                 <!--cnt_btn will trigger a function when clicked which is handled by jquery below-->
+                <i class="comment icon"></i>
+                <span> {{ obj.no_of_comments }} comments</span>
+                
                 <button class="cmt_btn ui button"
-                    style="margin-bottom: 5px; margin-left: -20px; background-color: transparent !important;">show /
+                    style="margin-bottom: 5px; margin-left:810px; background-color: transparent !important;">show /
                     hide comments</button>
+                
                 <div class="comment-box" style="display: none;">
                     {% if obj.comment_set.all %}
                     {% for c in obj.comment_set.all %}
 
                     <div class="ui segment mb-5">
                         <img class="ui avatar image" src={{c.user.avatar.url}}>
-                        <span>{{ c.user }}</span>
+                        <span style="font-weight: bold;">{{ c.user.first_name }} {{c.user.last_name}} - {{c.created}}</span>
                         <div class='mt-5'>{{ c.body }}</div>
                     </div>
 
@@ -94,18 +97,28 @@
         {% endfor %}
         {% endif %}
     </div>
+</div>
+<div style="position:fixed; right:35px; bottom:100px;">
+    <a href="{% url 'posts:main_post_view' %}"><button title="refresh" class="circular ui icon medium white button"><i class="refresh icon"></i></button></a>
+</div>
+<div style="position:fixed; right:35px; bottom:50px;">
+    <button title="add post" id='modal-btn2' class="circular ui icon medium red button"><i class="plus icon"></i></button>
+</div>
 
-    <div class="five wide column">
-        <div class="ui segment">
-            {% if post_added %}
-            <div class="ui green message">Post added</div>
-            {% endif %}
-            <form action="" method="POST" class='ui form' enctype="multipart/form-data">
-                {% csrf_token %}
-                {{p_form.as_p}}
-                <button type='submit' name="submit_p_form" class="ui positive button w-full mt-5">Send</button>
-            </form>
-        </div>
+<div class="ui modal" style="height: 40%; width: 60%; top: 70px; font-size: 20px;">
+    <i class="close icon"></i>
+    <div style="margin-top:10px; margin-left:10px;">
+        Add Post
+    </div>
+    <div class="ui segment">
+        {% if post_added %}
+        <div class="ui green message">Post added</div>
+        {% endif %}
+        <form action="" method="POST" class='ui form' enctype="multipart/form-data">
+            {% csrf_token %}
+            {{p_form.as_p}}
+            <button type='submit' name="submit_p_form" class="ui positive button w-full mt-5">Post</button>
+        </form>
     </div>
 </div>
 {% endblock content %}

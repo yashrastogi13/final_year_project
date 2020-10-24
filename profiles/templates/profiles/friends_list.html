@@ -5,40 +5,58 @@ Friends
 {% endblock title %}
 
 {% block content %}
-    {% if is_empty %}
-        <h1>No friends here</h1>
-    {% endif %}
+{% if is_empty %}
+<h1>No friends here</h1>
+{% endif %}
 
+
+<div class="ui eight column grid">
     {% for friend in friends %}
-        <div class="ui segment">
-            <div class="ui grid">
-                <div class="row">
-                    <div class="two wide column">
-                        <img class="ui small circular image" src="{{friend.avatar.url}}">
-                    </div>
-
-                    <div class="eleven wide column">
-                        <h3>{{friend.user}}</h3>
-                        <p>{{friend.bio}}</p>
-                    </div>
-
-                    <div class="three wide column" style="margin-top:15px;">
-                        <a href="{{friend.get_absolute_url}}">
-                            <button class="ui primary button" style="margin-bottom:5px; width: 150px">
-                                view profile
-                            </button>
-                        </a>
-
-                        {% if request.user in friend.friends.all %}
-                            <form action="{% url 'profiles:remove_friend' %}" method="POST">
-                                {% csrf_token %}
-                                <input type="hidden" name="profile_pk" value={{friend.pk}}>
-                                <button type="submit" class="ui negative basic button"><i class="minus square icon"></i>Remove friend</button>
-                            </form>
-                        {% endif %}
-                    </div>
-                </div>    
+    <div class="column" title="{{friend.bio}}">
+        <div class="ui fluid card" style="box-shadow:none;">
+            <div class="image" style="background-color:#f8f8f8 !important;">
+                <img src="{{friend.avatar.url}}">
+            </div>
+            <div class="content" style="background-color:#f8f8f8 !important; border:none; font-size:12px;" align="center">
+                <a href="{{friend.get_absolute_url}}" class="header">{{friend.first_name}} {{friend.last_name}}</a>
+                <div class="meta">
+                    <span class="date">Joined on - {{friend.created|date}}</span><br>
+                    <i class="user icon"></i>{{friend.get_friends_no}} Friends
+                </div>
             </div>
         </div>
+    </div>
+    {% comment %} <div class="ui segment">
+        <div class="ui grid">
+            <div class="row">
+                <div class="two wide column">
+                    <img class="ui small circular image" src="{{friend.avatar.url}}">
+                </div>
+
+                <div class="eleven wide column">
+                    <h3>{{friend.user}}</h3>
+                    <p>{{friend.bio}}</p>
+                </div>
+
+                <div class="three wide column" style="margin-top:15px;">
+                    <a href="{{friend.get_absolute_url}}">
+                        <button class="ui primary button" style="margin-bottom:5px; width: 150px">
+                            view profile
+                        </button>
+                    </a>
+
+                    {% if request.user in friend.friends.all %}
+                    <form action="{% url 'profiles:remove_friend' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="profile_pk" value={{friend.pk}}>
+                        <button type="submit" class="ui negative basic button"><i class="minus square icon"></i>Remove
+                            friend</button>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div> {% endcomment %}
     {% endfor %}
+</div>
 {% endblock content %}

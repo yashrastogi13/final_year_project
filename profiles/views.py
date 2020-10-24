@@ -121,20 +121,32 @@ def invite_profile_list_view(request):
     user = request.user
     qs = Profile.objects.get_all_profiles_to_invite(user)
     is_empty = False
+
     if len(qs) == 0:
         is_empty = True
     
     profile = Profile.objects.get(user = user)
-    rel = Relationship.objects.filter(receiver=profile)
+    rel_1 = Relationship.objects.filter(receiver=profile) 
     rel_receiver = set()
 
-    for item in rel:
+    rel_2 = Relationship.objects.filter(sender=profile)
+    rel_sender = set()
+
+    for item in rel_1:
         rel_receiver.add(item.sender.user)   #adding sender to the set
+
+    for item in rel_2:
+        rel_sender.add(item.receiver.user)   #adding receiver to the set
+    
+    final_rel = rel_receiver.union(rel_sender)
+
+    if len(qs) == len(final_rel):            #checking if length of both are equal then 
+        is_empty = True                      #there is no user left to send the request
 
     context = {
         'qs':qs,
         'is_empty':is_empty,
-        'rel_receiver':rel_receiver,
+        'rel_receiver':final_rel,
     }
 
     return render(request, 'profiles/invite_profile_list.html', context)

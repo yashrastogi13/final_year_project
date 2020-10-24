@@ -6,7 +6,10 @@ my profile
 
 {% block content %}
 <!--Modal for profile-->
-<div class="ui modal" style="height: 300px !important; top: 200px !important; font-size: 20px !important;">
+<style>
+    .ui.table tr td { border-top: 0px !important; }
+</style>
+<div class="ui modal" style="height: 300px !important; top: 20px !important; font-size: 20px !important;">
     <i class="close icon"></i>
     <div class="header">
         Update your Profile
@@ -35,9 +38,12 @@ my profile
     {% if confirm %}
     <div class="ui green message">Your profile has been updated</div>
     {% endif %}
-    <h3>profile: {{request.user}}</h3>
+    <h3 align="center">profile: {{request.user}}</h3>
+    <br>
     <div class="ui grid">
         <div class='row'>
+            <div class="one wide column">
+            </div>
             <div class='four wide column'>
                 <img class="ui medium rounded image" src={{profile.avatar.url}}>
                 <div class="row mt-5">
@@ -48,9 +54,10 @@ my profile
                     <a href="{% url 'password_change' %}"><button class="ui secondary button" style="margin-top:20px; margin-left:50px;">Change Password</button></a>
                 </div>
             </div>
-
-            <div class='twelve wide column'>
-                <table class="ui table">
+            <div class="one wide column">
+            </div>
+            <div class='ten wide column'>
+                <table class="ui very basic table" >
                     <tbody>
                         <tr>
                             <td>First name</td>
@@ -91,12 +98,16 @@ my profile
                             <td>{{profile.get_no_of_post}}</td>
                         </tr>
                         <tr>
-                            <td>Likes given</td>
-                            <td>{{profile.get_no_of_likes_given}}</td>
+                            <td>Created on</td>
+                            <td>{{profile.created}}</td>
                         </tr>
                         <tr>
-                            <td>Likes received</td>
-                            <td>{{profile.get_no_of_likes_received}}</td>
+                            <td>Last updated on</td>
+                            <td>{{profile.updated}}</td>
+                        </tr>
+                        <tr>
+                            <td>Likes(given/received)</td>
+                            <td>{{profile.get_no_of_likes_given}}/{{profile.get_no_of_likes_received}}</td>
                         </tr>
                     </tbody>
                 </table>

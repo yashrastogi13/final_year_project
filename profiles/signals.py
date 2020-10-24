@@ -10,8 +10,11 @@ from .models import Profile,Relationship
 def post_save_create_profile(sender, instance, created, **kwargs):
     print('sender',sender)
     print('instance',instance)
+    print(instance.__dict__)
+    print(kwargs)
     if created:
-        Profile.objects.create(user=instance)
+        Profile.objects.create(user=instance,first_name=instance.first_name,last_name=instance.last_name,email=instance.email)
+
 
 #When a user accepts a invitation add sender to receiver friend's list and vice versa 
 @receiver(post_save, sender = Relationship)
@@ -23,6 +26,7 @@ def post_save_add_to_friends(sender, instance, created, **kwargs):
         receiver_.friends.add(sender_.user)
         sender_.save()
         receiver_.save()
+
 
 #this signal will automatically remove friends from each other list when remove friends button is clicked
 @receiver(pre_delete, sender = Relationship)
