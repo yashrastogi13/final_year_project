@@ -7,7 +7,9 @@ my profile
 {% block content %}
 <!--Modal for profile-->
 <style>
-    .ui.table tr td { border-top: 0px !important; }
+    .ui.table tr td {
+        border-top: 0px !important;
+    }
 </style>
 <div class="ui modal" style="height: 300px !important; top: 20px !important; font-size: 20px !important;">
     <i class="close icon"></i>
@@ -49,15 +51,17 @@ my profile
                 <div class="row mt-5">
 
                     <!--jQuery is applied on this button-->
-                    <button class="ui secondary button" id='modal-btn' style="margin-top:30px; margin-left:60px;">Update profile</button>
+                    <button class="ui secondary button" id='modal-btn' style="margin-top:30px; margin-left:60px;">Update
+                        profile</button>
                     <br>
-                    <a href="{% url 'password_change' %}"><button class="ui secondary button" style="margin-top:20px; margin-left:50px;">Change Password</button></a>
+                    <a href="{% url 'password_change' %}"><button class="ui secondary button"
+                            style="margin-top:20px; margin-left:50px;">Change Password</button></a>
                 </div>
             </div>
             <div class="one wide column">
             </div>
             <div class='ten wide column'>
-                <table class="ui very basic table" >
+                <table class="ui very basic table">
                     <tbody>
                         <tr>
                             <td>First name</td>

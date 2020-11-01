@@ -33,7 +33,7 @@ invites friends
                                 <form action="{% url 'profiles:send_invite' %}" method="POST">
                                     {% csrf_token %}
                                     <input type="hidden" name="profile_pk" value={{obj.pk}}>
-                                    <button type="submit" class="ui positive basic button" ><i class="plus square icon"></i>Add to friends</button>
+                                    <button type="submit" class="ui positive basic button" ><i class="plus square icon"></i>Send Request</button>
                                 </form>            
                             </div>
                         </div>
