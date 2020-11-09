@@ -43,7 +43,6 @@ INSTALLED_APPS = [
 
     'posts.apps.PostsConfig',
     'profiles.apps.ProfilesConfig',
-    # 'accounts.apps.AccountsConfig',
 ]
 
 LOGIN_URL = "/admin/" 
@@ -74,6 +73,7 @@ TEMPLATES = [
                 'profiles.context_processors.profile_dp',
                 'profiles.context_processors.invitation_received_no',
                 'profiles.context_processors.friends_no',
+                'profiles.context_processors.search_profiles',
             ],
         },
     },

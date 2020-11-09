@@ -9,7 +9,6 @@
 {% url 'logout_view' as path_to_logout %}
 {% url 'login_view' as path_to_login %}
 
-
 <div class="ui secondary pointing menu nav"
     style="height:60px; position:sticky; top:0; z-index:1; background-color: white;">
     <div class="ui container">
@@ -50,15 +49,22 @@
                     </div>
                 </div>
             </div>
-            <div class="item" style="padding-bottom:0px; padding-right:30px;">
+            {% comment %} <div class="item" style="padding-bottom:0px; padding-right:30px;">
                 <form action="" method="GET">
                     <!--<div class="ui action left icon input">-->
                     <div class="ui icon input" style="">
-                        <input class="prompt transparent" type="text" name='q' placeholder="name of a friend...">
+                        <input id="search_here" class="prompt transparent" type="text" name='q' placeholder="search user...">
                         <i class="search icon"></i>
                         <!--<button type='submit' class="ui button">Search</button>-->
                     </div>
                 </form>
+            </div> {% endcomment %}
+            <div class="ui search" style="padding-right:30px;">
+                <div class="ui icon input">
+                    <input id="search_here" class="prompt" type="text" placeholder="Search user...">
+                    <i class="search icon"></i>
+                </div>
+                <div class="results"></div>
             </div>
 
             <a style="padding:5px; padding-right:20px" href="{{path_to_my_profile}}"
@@ -76,3 +82,27 @@
         </div>
     </div>
 </div>
+<script>
+    const data = '{{qs_json}}'
+    const rdata = JSON.parse(data.replace(/&quot;/g, '"'))
+    
+    //input.addEventListener('keyup', (e)=>{
+    //    filtered_arr = rdata.filter(Profile=> (Profile['first_name'].toLowerCase()+" "+Profile['last_name'].toLowerCase()).includes(e.target.value.toLowerCase()))
+    //})
+
+
+    var filtered_arr = [];
+
+    rdata.forEach(function(item){
+	var obj = {
+		title : item.first_name + " "+ item.last_name
+	};
+	filtered_arr.push(obj);    
+    });
+    
+    $('.ui.search')
+        .search({
+        source: filtered_arr
+    });
+
+</script>

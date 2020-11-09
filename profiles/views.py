@@ -58,6 +58,8 @@ def my_profile_view(request):
 
     if request.method == "POST":
         if form.is_valid():
+            full_name = form.first_name + " " + form.last_name
+            form.full_name = full_name
             form.save()
             confirm = True
     

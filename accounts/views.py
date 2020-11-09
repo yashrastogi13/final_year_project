@@ -1,11 +1,10 @@
 from django.shortcuts import render,redirect
-from django.urls import reverse_lazy
 from django.contrib.auth import (
     authenticate,
-    get_user_model,
     login,
     logout,
 )
+
 from .forms import UserLoginForm,UserRegisterForm
 # Create your views here.
 
@@ -34,10 +33,10 @@ def register_view(request):
         password = form.cleaned_data.get('password')
         user.set_password(password)
         user.save()
-        new_user = authenticate(username=user.username, password=user.password)
-        login(request, new_user)
+        new_user = authenticate(request,username=user.username, password=user.password)
+        #login(request, new_user)
         if next:
-            return redirect(next)
+            return redirect('login_view')
         return redirect('/')
 
     context = {
